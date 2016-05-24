@@ -10,7 +10,8 @@
 	<string name="notify_toast_saved">saved in the folder \'AnotherMonitor\'.</string>
 	<string name="notify_toast_error">An error happened when saving the CSV file:</string>
 	<string name="notify_toast_error_2">It hasn\'t been possible to start recording:</string>
-    <string name="w_main_choose_process">Choose other process(es)</string>
+    <string name="w_main_choose_process">选择待监控的应用</string>
+	<string name="w_main_start_test">开始测试</string>
     <string name="w_main_processes">Processes</string>
     <string name="w_main_memory">Memory</string>
     <string name="w_main_hide">Hide</string>

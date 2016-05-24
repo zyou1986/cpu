@@ -9,14 +9,6 @@
 
 package org.anothermonitor;
 
-import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.LayoutTransition;
@@ -39,10 +31,23 @@ import android.graphics.SurfaceTexture;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.*;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
 import android.os.Process;
 import android.util.Log;
-import android.view.*;
+import android.view.Gravity;
+import android.view.HapticFeedbackConstants;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.TextureView;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewManager;
+import android.view.ViewStub;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -52,6 +57,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 public class ActivityMain extends Activity {
 
@@ -73,7 +86,7 @@ public class ActivityMain extends Activity {
 	private DecimalFormat mFormat = new DecimalFormat("##,###,##0"), mFormatPercent = new DecimalFormat("##0.0"),
 							mFormatTime = new DecimalFormat("0.#");
 	private Resources res;
-	private Button mBChooseProcess, mBMemory, mBRemoveAll;
+	private Button mBChooseProcess, mBMemory, mBRemoveAll,mStartTest;
 	private ToggleButton mBHide;
 	private ViewGraphic mVG;
 	private SeekBar mSBRead;
@@ -348,6 +361,17 @@ public class ActivityMain extends Activity {
 		mLParent = (LinearLayout) findViewById(R.id.LParent);
 		
 		mLButtonMenu = (ImageView) findViewById(R.id.LButtonMenu);
+		mStartTest =(Button)findViewById(R.id.StartTest);  // TODO: 16/5/24
+
+
+		mStartTest.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				startActivity(new Intent(ActivityMain.this, ActivityTesting.class));
+			}
+		});
+
 
 //		if (!ViewConfiguration.get(this).hasPermanentMenuKey()) {
 			mLButtonMenu.setOnClickListener(new View.OnClickListener() {

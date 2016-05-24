@@ -9,15 +9,6 @@
 
 package org.anothermonitor;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -34,10 +25,30 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
-import android.view.*;
-import android.widget.*;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.jaredrummler.android.processes.ProcessManager;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class ActivityProcesses extends Activity {
 	private int navigationBarHeight;
@@ -58,9 +69,9 @@ public class ActivityProcesses extends Activity {
 	};
 
 
-	
-	
-	
+
+
+
 	@SuppressLint({ "InlinedApi", "NewApi" })
 	@SuppressWarnings("unchecked")
 	@Override
@@ -68,15 +79,15 @@ public class ActivityProcesses extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_processes);
 		final Resources res = getResources();
-		
+
 		mLV = (ListView) findViewById(R.id.listView);
-		
-		
+
+
 		if (Build.VERSION.SDK_INT >= 19) {
 			float sSW = res.getConfiguration().smallestScreenWidthDp, sD = res.getDisplayMetrics().density;
-			
+
 			int statusBarHeight = res.getDimensionPixelSize(res.getIdentifier(C.sbh, C.dimen, C.android));
-			
+
 			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 			if (!ViewConfiguration.get(this).hasPermanentMenuKey() && !KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_HOME)
 					&& (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT || sSW > 560)) {
@@ -85,9 +96,9 @@ public class ActivityProcesses extends Activity {
 				navigationBarHeight = res.getDimensionPixelSize(res.getIdentifier(C.nbh, C.dimen, C.android));
 				if (navigationBarHeight == 0)
 					navigationBarHeight = (int) (48*sD);
-				
+
 //				mLV.setPadding(0, 0, 0, navigationBarHeight);
-				
+
 				FrameLayout nb = (FrameLayout) findViewById(R.id.LNavigationBar);
 				nb.setVisibility(View.VISIBLE);
 				((FrameLayout.LayoutParams) nb.getLayoutParams()).height = navigationBarHeight;
@@ -100,8 +111,8 @@ public class ActivityProcesses extends Activity {
 			int pBottom = lTopBar.getPaddingBottom();
 			lTopBar.setPadding(pLeft, pTop + statusBarHeight, pRight, pBottom);
 		}
-		
-		
+
+
 		if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
 			mListProcesses = (List<Map<String, Object>>) savedInstanceState.getSerializable(C.listProcesses);
 			mListSelected = (List<Map<String, Object>>) savedInstanceState.getSerializable(C.listSelected);
@@ -111,7 +122,7 @@ public class ActivityProcesses extends Activity {
 						if (process.get(C.pId).equals(selected.get(C.pId)))
 							process.put(C.pSelected, Boolean.TRUE);
 			} else mListSelected = new ArrayList<Map<String, Object>>();
-			
+
 		} else {
 			PackageManager pm = getPackageManager();
 
@@ -134,18 +145,25 @@ public class ActivityProcesses extends Activity {
 						if (name == null)
 							name = p.processName;
 
-						mListProcesses.add(mapDataForPlacesList(false, name, String.valueOf(p.pid), p.pkgList != null && p.pkgList.length > 0 ? p.pkgList[0] : p.processName, p.processName));
+						if (name.contains("滴滴")){
+							mListProcesses.add(0,mapDataForPlacesList(false, name, String.valueOf(p.pid), p.pkgList != null && p.pkgList.length > 0 ? p.pkgList[0] : p.processName, p.processName));
+						}
+						else {
+							mListProcesses.add(mapDataForPlacesList(false, name, String.valueOf(p.pid), p.pkgList != null && p.pkgList.length > 0 ? p.pkgList[0] : p.processName, p.processName));
+						}
+
+
 					}
 				}
-				
-				Collections.sort(mListProcesses, new Comparator<Map<String, Object>>(){
-				     public int compare(Map<String, Object> o1, Map<String, Object> o2){
-				         if(o1.get(C.pAppName).equals(o2.get(C.pAppName)))
-				             return 0;
-				         return ((String) o1.get(C.pAppName)).compareTo((String) o2.get(C.pAppName)) < 0 ? -1 : 1;
-				     }
-				});
-		
+
+//				Collections.sort(mListProcesses, new Comparator<Map<String, Object>>(){
+//				     public int compare(Map<String, Object> o1, Map<String, Object> o2){
+//				         if(o1.get(C.pAppName).equals(o2.get(C.pAppName)))
+//				             return 0;
+//				         return ((String) o1.get(C.pAppName)).compareTo((String) o2.get(C.pAppName)) < 0 ? -1 : 1;
+//				     }
+//				});
+
 				List<Map<String, Object>> mListSelectedProv = (List<Map<String, Object>>) getIntent().getSerializableExtra(C.listSelected);
 				if (mListSelectedProv != null && !mListSelectedProv.isEmpty()) {
 					for (Map<String, Object> processSelected : mListSelectedProv) {
@@ -157,14 +175,14 @@ public class ActivityProcesses extends Activity {
 						}
 					}
 				}
-				
+
 			} else {
 				mLV.setVisibility(View.GONE);
 				findViewById(R.id.LProcessesProblem).setVisibility(View.VISIBLE);
 			}
 		}
-		
-		
+
+
 		if (mListProcesses == null || mListProcesses.isEmpty()) {
 			mLV.setVisibility(View.GONE);
 			findViewById(R.id.LProcessesProblem).setVisibility(View.VISIBLE);
@@ -176,7 +194,7 @@ public class ActivityProcesses extends Activity {
 		mSA = new SimpleAdapterCustomised(this, mListProcesses, R.layout.activity_processes_entry,
 				new String[] { C.pSelected, C.pPackage, C.pName, C.pId },
 				new int[] { R.id.LpBG, R.id.IVpIconBig, R.id.TVpAppName, R.id.TVpName });
-		
+
 		mLV.setAdapter(mSA);
 		mLV.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -196,7 +214,7 @@ public class ActivityProcesses extends Activity {
 						if (i.next().get(C.pId).equals(newEntry.get(C.pId)))
 							i.remove();
 				}
-				
+
 				mListProcesses.get(position).put(C.pSelected, tag.selected);
 				mSA.notifyDataSetChanged();
 			}
@@ -214,11 +232,11 @@ public class ActivityProcesses extends Activity {
             }
         });
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	private Map<String, Object> mapDataForPlacesList(boolean selected, String pAppName, String pid, String pPackage, String pName) {
 		Map<String, Object> entry = new HashMap<String, Object>();
 		entry.put(C.pSelected, selected);
@@ -228,11 +246,11 @@ public class ActivityProcesses extends Activity {
 		entry.put(C.pName, pName);
 		return entry;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	@Override
 	public void onSaveInstanceState(Bundle outState)  {
 		if (mListProcesses.size() != 0)
@@ -240,16 +258,16 @@ public class ActivityProcesses extends Activity {
 		if (mListSelected.size() != 0)
 			outState.putSerializable(C.listSelected, (Serializable) mListSelected);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	class SimpleAdapterCustomised extends SimpleAdapter {
 		public SimpleAdapterCustomised(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
 			super(context, data, resource, from, to);
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View view = convertView;
@@ -263,26 +281,26 @@ public class ActivityProcesses extends Activity {
 				tag.tvPName = (TextView) view.findViewById(R.id.TVpName);
 				view.setTag(tag);
 			} else  tag = (Tag) view.getTag();
-			
+
 			if (position == mListProcesses.size()-1)
 				view.setPadding(0, 0, 0, navigationBarHeight);
 			else view.setPadding(0, 0, 0, 0);
-			
+
 			if ((Boolean) mListProcesses.get(position).get(C.pSelected))
 				tag.l.setBackgroundColor(ActivityProcesses.this.getResources().getColor(R.color.bgProcessessSelected));
 			else tag.l.setBackgroundColor(Color.TRANSPARENT);
 			try {
 				if (mListProcesses.get(position).get(C.pAppName).equals(mListProcesses.get(position).get(C.pName)))
-					tag.iv.setImageDrawable(getDrawable(R.drawable.transparent_pixel));
+					tag.iv.setImageResource(R.drawable.transparent_pixel);
 				else tag.iv.setImageDrawable(getPackageManager().getApplicationIcon((String) mListProcesses.get(position).get(C.pPackage)));
-			} catch (NameNotFoundException e) {
+			} catch (Exception e) {
 			}
 			tag.tvPAppName.setText((String) mListProcesses.get(position).get(C.pAppName));
 			tag.tvPName.setText(mListProcesses.get(position).get(C.pName) + " - Pid: " + mListProcesses.get(position).get(C.pId));
-			
+
 			return view;
 		}
-		
+
 		class Tag {
 			boolean selected;
 			LinearLayout l;

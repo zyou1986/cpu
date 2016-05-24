@@ -125,87 +125,113 @@
 			                    android:text="@string/p_percentage"
 			                    android:textColor="@color/process1" />
 			            </LinearLayout>
-			            
-			            <LinearLayout
-			                style="@style/ParameterRow"
-			                android:id="@+id/LCPUAM" >
-			
-					        <ImageView
-			                	style="@style/ParameterStatusIcon"
-			                    android:id="@+id/IVCPUAMPS" />
 
-						    <ImageView
-						        android:layout_width="30dp"
-						        android:layout_height="30dp"
-						        android:layout_marginLeft="10dp"
-						        android:src="@drawable/icon" />
-	    
-							<LinearLayout
-							    style="@style/FirstColumn"
-							  	android:orientation="vertical"  >
-						
-							    <TextView
-									android:layout_width="match_parent"
-									android:layout_height="wrap_content"
-			                    	android:text="@string/p_cpuanothermonitor"
-									android:textSize="16sp"
-									android:textStyle="bold"
-									android:textColor="@color/process2" />
-							
-							    <TextView
-									android:layout_width="match_parent"
-									android:layout_height="wrap_content"
-									android:textSize="13sp"
-									android:textColor="@color/VeryDarkGray" />
-							    
-							</LinearLayout>
-    
-							<LinearLayout
-							    style="@style/SecondColumn"
-							  	android:orientation="vertical"  >
-						
-							    <TextView
-			                    	android:id="@+id/TVCPUAMP"
-									android:layout_width="55dp"
-									android:layout_height="wrap_content"
-									android:layout_gravity="bottom|right"
-									android:gravity="right"
-									android:textSize="16sp"
-			                    	android:textColor="@color/process2"
-									android:text="@string/p_percentage" />
-							
-							    <TextView
-							        android:id="@+id/TVMemoryAM"
-									android:layout_width="wrap_content"
-									android:layout_height="wrap_content"
-									android:gravity="right"
-									android:textSize="13sp"
-									android:textColor="@color/VeryDarkGray" />
-							    
-							</LinearLayout>
-			            </LinearLayout>
-			
 				        <LinearLayout
 				            android:id="@+id/LProcessContainer"
 				            android:layout_width="match_parent"
 				            android:layout_height="wrap_content"
 				            android:orientation="vertical" />
-	
-			            <Button
-			                android:id="@+id/BChooseProcess"
-			                android:layout_width="wrap_content"
-			                android:layout_height="wrap_content"
-			                android:layout_marginTop="12dp"
-				            android:layout_marginBottom="5dp"
-			                android:layout_marginLeft="25dp"
-			                android:layout_marginRight="25dp"
-			                android:paddingBottom="16dp"
-			                android:paddingLeft="16dp"
-			                android:paddingRight="16dp"
-			                android:paddingTop="15dp"
-			                android:text="@string/w_main_choose_process"
-			                android:textSize="18sp"
-			                android:textAllCaps="false" />
+
+						<!-- 下面这个view 隐藏  by mileszhouyou-->
+
+						<LinearLayout
+							style="@style/ParameterRow"
+							android:visibility="invisible"
+							android:id="@+id/LCPUAM" >
+
+							<ImageView
+								style="@style/ParameterStatusIcon"
+								android:id="@+id/IVCPUAMPS" />
+
+							<ImageView
+								android:layout_width="30dp"
+								android:layout_height="30dp"
+								android:layout_marginLeft="10dp"
+								android:src="@drawable/icon" />
+
+							<LinearLayout
+								style="@style/FirstColumn"
+								android:orientation="vertical"  >
+
+								<TextView
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:text="@string/p_cpuanothermonitor"
+									android:textSize="16sp"
+									android:textStyle="bold"
+									android:textColor="@color/process2" />
+
+								<TextView
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:textSize="13sp"
+									android:textColor="@color/VeryDarkGray" />
+
+							</LinearLayout>
+
+							<LinearLayout
+								style="@style/SecondColumn"
+								android:orientation="vertical"  >
+
+								<TextView
+									android:id="@+id/TVCPUAMP"
+									android:layout_width="55dp"
+									android:layout_height="wrap_content"
+									android:layout_gravity="bottom|right"
+									android:gravity="right"
+									android:textSize="16sp"
+									android:textColor="@color/process2"
+									android:text="@string/p_percentage" />
+
+								<TextView
+									android:id="@+id/TVMemoryAM"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:gravity="right"
+									android:textSize="13sp"
+									android:textColor="@color/VeryDarkGray" />
+
+							</LinearLayout>
+						</LinearLayout>
+
+						<LinearLayout
+							android:layout_width="wrap_content"
+							android:orientation="horizontal"
+							android:layout_height="wrap_content">
+							<Button
+								android:id="@+id/BChooseProcess"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="12dp"
+								android:layout_marginBottom="5dp"
+
+								android:layout_marginRight="25dp"
+								android:paddingBottom="16dp"
+								android:paddingLeft="16dp"
+								android:paddingRight="16dp"
+								android:paddingTop="15dp"
+								android:text="@string/w_main_choose_process"
+								android:textSize="18sp"
+								android:textAllCaps="false" />
+
+							<Button
+								android:id="@+id/StartTest"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="12dp"
+								android:layout_marginBottom="5dp"
+								android:layout_marginLeft="25dp"
+
+								android:paddingBottom="16dp"
+								android:paddingLeft="16dp"
+								android:paddingRight="16dp"
+								android:paddingTop="15dp"
+								android:text="@string/w_main_start_test"
+								android:textSize="18sp"
+								android:textAllCaps="false" />
+
+						</LinearLayout>
+
 			            
 			            <LinearLayout
 			                style="@style/ParameterRow"
