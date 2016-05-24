@@ -314,7 +314,7 @@ public class ViewGraphic extends TextureView {
 		
 		calculateInnerVariables();
 
-		bgPaint = getPaint(Color.LTGRAY, Paint.Align.CENTER, 12, false, 0);
+		bgPaint = getPaint(Color.GRAY, Paint.Align.CENTER, 12, false, 0);
 		circlePaint = getPaint(Color.RED, Paint.Align.CENTER, 12, false, 0);
 
 		linesEdgePaint = getPaint(res.getColor(R.color.shadow), Paint.Align.CENTER, 12, false, thickEdges);
@@ -337,6 +337,16 @@ public class ViewGraphic extends TextureView {
 		textPaintLegendV = getPaint(Color.DKGRAY, Paint.Align.RIGHT, textSizeLegend, true, 0);
 		
 		graphicInitialised = true;
+
+		bgPaint.setAlpha(0x40);
+//		circlePaint.setAlpha(0x40);
+//		linesEdgePaint.setAlpha(0x40);
+//		linesGridPaint.setAlpha(0x40);
+//		cpuTotalPaint.setAlpha(0x40);
+//		cpuAMPaint.setAlpha(0x40);
+//		memUsedPaint.setAlpha(0x40);
+//		memAvailablePaint.setAlpha(0x40);
+
 	}
 
 	
